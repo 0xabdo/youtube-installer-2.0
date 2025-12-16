@@ -4,6 +4,9 @@
   "description": "API serverless functions for YouTube downloader",
   "dependencies": {
     "ytdlp-nodejs": "^2.3.5"
+  },
+  "scripts": {
+    "install-ytdlp": "node -e \"const {YtDlp} = require('ytdlp-nodejs'); const ytdlp = new YtDlp(); ytdlp.checkInstallationAsync().then(() => console.log('yt-dlp binary installed successfully')).catch(e => { console.error('yt-dlp install error:', e.message); process.exit(1); })\""
   }
 }
 
