@@ -21,10 +21,12 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && nodemon server.js",
     "client": "cd client && npm start",
-    "build": "cd client && npm install && npm run build",
+    "build": "npm run install-all && cd client && npm run build",
     "install-client": "cd client && npm install",
-    "install-server": "cd server && npm install",
-    "install-all": "npm run install-server && npm run install-client"
+    "install-server": "cd server && npm install && npm run install-ytdlp",
+    "install-api": "cd api && npm install && npm run install-ytdlp",
+    "install-ytdlp": "node -e \"const {YtDlp} = require('ytdlp-nodejs'); const ytdlp = new YtDlp(); ytdlp.checkInstallationAsync().then(() => console.log('yt-dlp installed')).catch(e => console.error('yt-dlp install error:', e))\"",
+    "install-all": "npm run install-server && npm run install-client && npm run install-api"
   },
   "keywords": ["youtube", "downloader", "react", "nodejs"],
   "author": "Your Name",
