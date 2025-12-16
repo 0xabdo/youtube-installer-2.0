@@ -1,0 +1,9 @@
+{
+  "name": "youtube-downloader-api",
+  "version": "1.0.0",
+  "description": "API serverless functions for YouTube downloader",
+  "dependencies": {
+    "ytdlp-nodejs": "^2.3.5"
+  }
+}
+
