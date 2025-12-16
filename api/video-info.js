@@ -16,16 +16,26 @@ const getYtDlp = async () => {
   if (!ytdlp) {
     try {
       ytdlp = new YtDlp();
-      // Try to check installation (with timeout)
-      const checkPromise = ytdlp.checkInstallationAsync();
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Initialization timeout')), 5000)
-      );
-      await Promise.race([checkPromise, timeoutPromise]);
+      // Try to check installation and download binary if needed
+      try {
+        await ytdlp.checkInstallationAsync();
+        console.log('yt-dlp binary is available');
+      } catch (installError) {
+        console.log('yt-dlp binary not found, attempting to download...');
+        // The library should auto-download, but we can try to trigger it
+        // by calling a method that requires the binary
+        try {
+          // This will trigger binary download if needed
+          await ytdlp.getInfoAsync('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+          console.log('yt-dlp binary downloaded successfully');
+        } catch (downloadError) {
+          console.error('Failed to download yt-dlp binary:', downloadError);
+          throw new Error('yt-dlp binary is not available and could not be downloaded. Please ensure the binary is installed during build.');
+        }
+      }
     } catch (error) {
       console.error('Failed to initialize yt-dlp:', error);
-      // Don't throw, just log - we'll try to use it anyway
-      console.warn('Continuing without installation check...');
+      throw error;
     }
   }
   return ytdlp;
