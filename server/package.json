@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "echo 'Server build completed'"
+    "build": "npm run install-ytdlp",
+    "install-ytdlp": "node -e \"const {YtDlp} = require('ytdlp-nodejs'); const ytdlp = new YtDlp(); ytdlp.checkInstallationAsync().then(() => console.log('yt-dlp binary installed successfully')).catch(e => { console.error('yt-dlp install error:', e.message); process.exit(1); })\""
   },
   "dependencies": {
     "cors": "^2.8.5",
